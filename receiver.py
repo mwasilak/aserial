@@ -1,13 +1,14 @@
 import asyncio
 import aioserial
 from datetime import datetime
+import sys
 
 
 class Receiver:
 
-    def __init__(self):
+    def __init__(self, port):
         self.counter = 1
-        self.aioserial_instance = aioserial.AioSerial(port='/dev/ttyUSB1')
+        self.aioserial_instance = aioserial.AioSerial(port)
         self.loop = asyncio.get_event_loop()
         try:
             self.loop.run_until_complete(self.receive_measurements())
@@ -22,4 +23,5 @@ class Receiver:
 
 
 if __name__ == '__main__':
-    receiver = Receiver()
+    serial_port = sys.argv[1]
+    receiver = Receiver(serial_port)
